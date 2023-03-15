@@ -9,5 +9,5 @@ public interface LedgerService {
 
 	int getTotalRowCount(SearchVO searchVO);
 	List<LedgerVO> getLedgerList(SearchVO searchVO);
-
+	
 }

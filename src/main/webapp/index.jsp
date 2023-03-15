@@ -248,7 +248,7 @@ body {
                         <p class="text-whitesmoke text-center"><small>계정이 없으십니까?</small></p>
                         <a class="text-darkyellow" href="#"><small>회원가입</small></a>
                     </form>
-                    <p class="margin-t text-whitesmoke"><small> 나만의 가계부 &copy; 2023</small> </p>
+                    <p class="margin-t text-whitesmoke"><small> save24 &copy; 2023</small> </p>
                 </div>
             </div>
 </body>

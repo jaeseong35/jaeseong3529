@@ -12,11 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.lec.jdbc.common.SearchVO;
 import com.lec.jdbc.mapper.LedgerRowMapper;
-import com.lec.jdbc.mapper.LedgerRowMapper;
-import com.lec.jdbc.mapper.LedgerRowMapper;
+import com.lec.jdbc.vo.CategoryVO;
 import com.lec.jdbc.vo.LedgerVO;
-import com.lec.jdbc.vo.LedgerVO;
-import com.lec.jdbc.vo.LedgerVO;
+
 
 @Repository("ledgerDAO")
 @PropertySource("classpath:config/ledgersql.properties")
@@ -79,9 +77,15 @@ public class LedgerDAO {
 				sql = selectLedgerListByExpence;
 			}
 		}
-
+		
 		String searchWord = "%" + searchVO.getSearchWord() + "%";
 		Object[] args = { searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
 		return jdbcTemplate.query(sql, args, new LedgerRowMapper());
 	}
+
+
+
+
+	
+	
 }

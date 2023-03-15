@@ -14,7 +14,6 @@ public class LedgerRowMapper implements RowMapper<LedgerVO> {
 		ledger.setContent(rs.getString("CONTENT"));
 		ledger.setAmount(rs.getInt("AMOUNT"));
 		ledger.setId(rs.getInt("ID"));
-		ledger.setCategory_id(rs.getInt("CATEGORY_ID"));
 		return ledger;
 	}
 }
