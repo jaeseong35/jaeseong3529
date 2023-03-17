@@ -19,9 +19,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDAO userDAO;
-	
-//	public UserServiceImpl() {
-//		System.out.println("Service 객체 생성!!!!");
+
 //	}
 	@Override
 	public UserVO getUser(UserVO vo) {

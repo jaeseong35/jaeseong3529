@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.lec.jdbc.common.SearchVO;
+import com.lec.jdbc.mapper.CategoryRowMapper;
 import com.lec.jdbc.mapper.LedgerRowMapper;
 import com.lec.jdbc.vo.CategoryVO;
 import com.lec.jdbc.vo.LedgerVO;
@@ -29,6 +30,7 @@ public class LedgerDAO {
 	private String sql = "";
 	private String ledgerTotalRowCount = "";
 	private String selectMyLedgerList = "";
+	private String selectLedgeCateList = "";
 
 //   제목,작성자,카테고리로 검색하기
 	private String selectLedgerListByAll = "";
@@ -42,6 +44,7 @@ public class LedgerDAO {
 		selectLedgerListByAll = environment.getProperty("selectLedgerListByAll");
 		selectLedgerListByIncome = environment.getProperty("selectLedgerListByIncome");
 		selectLedgerListByExpence = environment.getProperty("selectLedgerListByExpence");
+		selectLedgeCateList = environment.getProperty("selectLedgeCateList");
 	}
 
 	public int getTotalRowCount(SearchVO searchVO) {
@@ -52,7 +55,6 @@ public class LedgerDAO {
 			searchVO.setSearchType("all");
 		} else {
 			if (searchVO.getSearchType().equalsIgnoreCase("alll")) {
-				sql = ledgerTotalRowCount + " and address like '%" + searchVO.getSearchWord() + "%'";
 			} else if (searchVO.getSearchType().equalsIgnoreCase("nickname")) {
 				sql = ledgerTotalRowCount + " and category_id like '%" + searchVO.getSearchWord() + "%'";
 			} else if (searchVO.getSearchType().equalsIgnoreCase("Cate2")) {
@@ -63,29 +65,34 @@ public class LedgerDAO {
 	}
 
 	public List<LedgerVO> getLedgerList(SearchVO searchVO) {
-
-		if (searchVO.getSearchType() == null || searchVO.getSearchType().isEmpty() || searchVO.getSearchWord() == null
-				|| searchVO.getSearchWord().isEmpty()) {
-			sql = selectLedgerListByAll;
-			searchVO.setSearchType("all");
-		} else {
-			if (searchVO.getSearchType().equalsIgnoreCase("all")) {
-				sql = selectLedgerListByAll;
-			} else if (searchVO.getSearchType().equalsIgnoreCase("1")) {
-				sql = selectLedgerListByIncome;
-			} else if (searchVO.getSearchType().equalsIgnoreCase("2")) {
-				sql = selectLedgerListByExpence;
-			}
-		}
-		
-		String searchWord = "%" + searchVO.getSearchWord() + "%";
-		Object[] args = { searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
-		return jdbcTemplate.query(sql, args, new LedgerRowMapper());
+	    if (searchVO.getSearchType() == null || searchVO.getSearchType().isEmpty()
+	            || searchVO.getSearchWord() == null || searchVO.getSearchWord().isEmpty()) {
+	        sql = selectLedgeCateList;
+	        searchVO.setSearchType("all");
+	    } else {
+	        if (searchVO.getSearchType().equalsIgnoreCase("all")) {
+	            sql = selectLedgeCateList;
+	        } else if (searchVO.getSearchType().equalsIgnoreCase("1")) {
+	            sql = selectLedgerListByIncome;
+	        } else if (searchVO.getSearchType().equalsIgnoreCase("2")) {
+	            sql = selectLedgerListByExpence;
+	        }
+	    }
+	    
+	    String searchWord = "%" + searchVO.getSearchWord() + "%";
+	    Object[] args = { searchWord, searchVO.getFirstRow(), searchVO.getRowSizePerPage() };
+	    List<LedgerVO> ledgerList = jdbcTemplate.query(sql, args, new LedgerRowMapper());
+	    
+	    // category 정보 가져오기
+	        for (LedgerVO ledger : ledgerList) {
+	            Integer category_id = ledger.getCategory_id(); // Integer로 변경
+	            if (category_id != null) {
+	                CategoryVO category = jdbcTemplate.queryForObject(
+	                        "SELECT * FROM CATEGORY WHERE id=?", new Object[] { category_id },
+	                        new CategoryRowMapper());
+	                ledger.setCategory(category);
+	            }
+	        }
+	        return ledgerList;
 	}
-
-
-
-
-	
-	
 }

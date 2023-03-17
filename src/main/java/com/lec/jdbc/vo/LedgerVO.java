@@ -1,72 +1,61 @@
 package com.lec.jdbc.vo;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "ledger")
 public class LedgerVO {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "content")
-	private String content;
-	@Column(name = "amount")
-	private int amount;
-	@Column(name = "date")
-	private String date;
-	
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private CategoryVO category;
-	
-	// Getters and setters
+    private String content;
+    private int amount;
+    private String date;
+    private CategoryVO category;
+    private int category_id;
+    
+    public LedgerVO() {
+    }
+
+    public LedgerVO(int id, String content, int amount, String date, int category_id) {
+        this.id = id;
+        this.content = content;
+        this.amount = amount;
+        this.date = date;
+        this.category_id = category_id;
+    }
+    
 	public String getContent() {
 		return content;
 	}
-	
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
 	public int getAmount() {
 		return amount;
 	}
-	
 	public void setAmount(int amount) {
 		this.amount = amount;
-	}
-	
-	public String getDate() {
-		return date;
-	}
-	
-	public void setDate(String date) {
-		this.date = date;
 	}
 	
 	public CategoryVO getCategory() {
 		return category;
 	}
-	
 	public void setCategory(CategoryVO category) {
 		this.category = category;
 	}
-	
+	public int getCategory_id() {
+		return category_id; 
+	}
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
 	public int getId() {
 		return id;
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 }

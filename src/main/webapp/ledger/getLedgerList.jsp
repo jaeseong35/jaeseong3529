@@ -183,18 +183,35 @@ header {
 					</div>
 				</div>
 			</header>
-			<div class="container mt-3">
-				<div class="row">
-					<c:forEach items="${ledgerList}" var="ledger">
-						<div class="col-12 col-md-6 col-lg-3 mt-5">			
-							<div class="text-muted">입출금 : ${ ledger.category.date}</div>
-							<div class="text-muted">내용 : ${ ledger.content }</div>
-							<div class="text-muted">금액 : ${ ledger.amount }</div>
-							<div class="text-muted">날짜 : ${ ledger.date }</div>						
-						</div>
-					</c:forEach>
-				</div>
-			</div>
+			<table>
+    <thead class="table-light text-center">
+        <tr class="text-white">
+            <th>Content</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+<c:forEach var="ledger" items="${ledgerList}">
+  <tr class="text-white">
+    <td>${ledger.content}</td>
+    <td>${ledger.amount}</td>
+    <td>${ledger.date}</td>
+    <td>
+      <c:choose>
+        <c:when test="${not empty ledger.category}">
+          ${ledger.category.name}
+        </c:when>
+        <c:otherwise>          <span>Unknown</span>
+        </c:otherwise>
+      </c:choose>
+
+    </td>
+  </tr>
+</c:forEach>
+    </tbody>
+</table>
 
 			<div class="wave waveTop"
 				style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
