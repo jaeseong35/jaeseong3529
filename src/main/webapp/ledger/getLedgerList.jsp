@@ -139,7 +139,10 @@ header {
 				    datasets: [{
 				      label: '# 금액',
 				      data: dataArr,
-				      borderWidth: 1
+				      borderWidth: 2,
+				      fill: false,
+				      borderColor: 'rgb(75, 192, 192)',
+				      tension: 0.1
 				    }]
 				  },
 				  options: {
@@ -152,31 +155,6 @@ header {
 				});
 
 </script>
-
-
-	<script>
-		
-const ctx2 = document.getElementById('myChart2');
-
-new Chart(ctx2, {
-  type: 'line',
-  data: {
-    labels: [2,3,4,5,6,],
-    datasets: [{
-      label: '# 금액',
-      data: [1,2,3,4,5],
-      borderWidth: 1
-    }]
-  },
-  title: {
-      display: true,
-      text: 'Chart.js Line Chart'
-      }
-    }
-  }
-});
-</script>
-
 
 </body>
 </html>
