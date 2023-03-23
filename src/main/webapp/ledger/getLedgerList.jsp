@@ -111,6 +111,7 @@ header {
 			</div>
 		</div>
 	</header>
+	<h1>나의 소비 분석</h1>
 	<div>
 		<canvas id="myChart"></canvas>
 	</div>
