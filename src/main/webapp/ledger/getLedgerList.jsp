@@ -111,51 +111,96 @@ header {
 			</div>
 		</div>
 	</header>
-	<h1>나의 소비 분석</h1>
-	<div>
-		<canvas id="myChart"></canvas>
-	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-	<script>
-			const dataArr = [
-				  <c:forEach var="ledger" items="${ledgerList}">
-				    ${ledger.amount},
-				  </c:forEach>
-				];
+<h1>나의 소비 카테고리 분석</h1>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
 
-				const labelArr = [
-				  <c:forEach var="ledger" items="${ledgerList}">
-				    "${ledger.category.name}",
-				  </c:forEach>
-				];
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-				const ctx = document.getElementById('myChart');
+<script>
+    const dataArr = [
+        <c:forEach var="ledger" items="${ledgerList}">
+            ${ledger.amount},
+        </c:forEach>
+    ];
 
-				new Chart(ctx, {
-				  type: 'bar',
-				  data: {
-				    labels: labelArr,
-				    datasets: [{
-				      label: '# 금액',
-				      data: dataArr,
-				      borderWidth: 2,
-				      fill: false,
-				      borderColor: 'rgb(75, 192, 192)',
-				      tension: 0.1
-				    }]
-				  },
-				  options: {
-				    scales: {
-				      y: {
-				        beginAtZero: true
-				      }
-				    }
-				  }
-				});
+    const labelArr = [
+        <c:forEach var="ledger" items="${ledgerList}">
+            '${ledger.category.name}',
+        </c:forEach>
+    ];
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labelArr,
+            datasets: [{
+                label: '# 금액',
+                data: dataArr,
+                borderWidth: 2,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
 </script>
 
+<h1>나의 월별 소비 분석</h1>
+<div>
+    <canvas id="myChartMon"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const dataArr2 = [
+        <c:forEach var="ledger" items="${ledgerMonthly}">
+            '${ledger.month}', 
+        </c:forEach>
+    ];
+
+    const labelArr2 = [
+        <c:forEach var="ledger" items="${ledgerMonthly}">
+            ${ledger.total_amount},
+        </c:forEach>
+    ];
+
+    const ctxm = document.getElementById('myChartMon');
+
+    new Chart(ctxm, {
+        type: 'line',
+        data: {
+            labels: dataArr2, // labels와 data의 위치가 바뀌었습니다.
+            datasets: [{
+                label: '# 총 소비 금액',
+                data: labelArr2, // labels와 data의 위치가 바뀌었습니다.
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+ 
 </body>
 </html>

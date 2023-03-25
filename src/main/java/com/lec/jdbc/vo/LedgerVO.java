@@ -9,6 +9,7 @@ public class LedgerVO {
     private String date;
     private CategoryVO category;
     private int category_id;
+ 
     
     public LedgerVO() {
     }
@@ -19,6 +20,7 @@ public class LedgerVO {
         this.amount = amount;
         this.date = date;
         this.category_id = category_id;
+        
     }
     
 	public String getContent() {
