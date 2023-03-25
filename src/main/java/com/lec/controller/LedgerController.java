@@ -29,26 +29,10 @@ public class LedgerController {
    
 
 // LIST컨트롤러
- @RequestMapping("getLedgerList.do")
- public String getLedgerList(Model model, SearchVO searchVO,
-       @RequestParam(defaultValue="1") int curPage,
-       @RequestParam(defaultValue="10") int rowSizePerPage,
-       @RequestParam(defaultValue="") String searchCategory,
-       @RequestParam(defaultValue="") String searchType,
-       @RequestParam(defaultValue="") String searchWord) {
-    
-    searchVO.setTotalRowCount(ledgerService.getTotalRowCount(searchVO));
-    searchVO.setCurPage(curPage);
-    searchVO.setRowSizePerPage(rowSizePerPage);
-    searchVO.setSearchCategory(searchCategory);
-    searchVO.setSearchType(searchType);
-    searchVO.setSearchWord(searchWord);
-    searchVO.pageSetting();
- 
-    List<LedgerVO> ledgerList = ledgerService.getLedgerList(searchVO);
-    model.addAttribute("searchVO", searchVO);
-    model.addAttribute("ledgerList", ledgerList);      
-    return "ledger/getLedgerList.jsp";
- }
-     
+   @RequestMapping("getLedgerList.do")
+   public String getLedgerList(Model model) {
+       List<LedgerVO> ledgerList = ledgerService.getLedgerList();
+       model.addAttribute("ledgerList", ledgerList);
+       return "ledger/getLedgerList.jsp";
+   }
 }

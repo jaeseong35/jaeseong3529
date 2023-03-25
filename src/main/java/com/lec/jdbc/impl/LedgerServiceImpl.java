@@ -11,24 +11,14 @@ import com.lec.jdbc.service.LedgerService;
 import com.lec.jdbc.vo.CategoryVO;
 import com.lec.jdbc.vo.LedgerVO;
 
-
 @Service("ledgerService")
 public class LedgerServiceImpl implements LedgerService {
     
     @Autowired
     private LedgerDAO ledgerDAO;
-    
 
-	
-	
-	public int getTotalRowCount(SearchVO searchVO) {
-		return ledgerDAO.getTotalRowCount(searchVO);
-	}
-	
-	@Override
-	public List<LedgerVO> getLedgerList(SearchVO searchVO) {
-		return ledgerDAO.getLedgerList(searchVO);
-	}
-
-
+    @Override
+    public List<LedgerVO> getLedgerList() {
+        return ledgerDAO.getLedgerList();
+    }
 }
