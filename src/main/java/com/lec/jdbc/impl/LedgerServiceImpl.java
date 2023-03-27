@@ -9,6 +9,7 @@ import com.lec.jdbc.common.SearchVO;
 import com.lec.jdbc.dao.LedgerDAO;
 import com.lec.jdbc.service.LedgerService;
 import com.lec.jdbc.vo.CategoryVO;
+import com.lec.jdbc.vo.LedgerCategoryVO;
 import com.lec.jdbc.vo.LedgerMonthlyVO;
 import com.lec.jdbc.vo.LedgerVO;
 
@@ -26,5 +27,10 @@ public class LedgerServiceImpl implements LedgerService {
 	@Override
 	public List<LedgerMonthlyVO> getLedgerMonthly() {
 		return ledgerDAO.getLedgerMonthly();
+	}
+	
+	@Override
+	public List<LedgerCategoryVO> getLedgerCategoryList() {
+		return ledgerDAO.getLedgerCategoryList();
 	}
 }

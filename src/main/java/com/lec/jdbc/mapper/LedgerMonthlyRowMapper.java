@@ -9,12 +9,7 @@ import com.lec.jdbc.vo.LedgerMonthlyVO;
 
 public class LedgerMonthlyRowMapper implements RowMapper<LedgerMonthlyVO> {
 	public LedgerMonthlyVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		LedgerMonthlyVO ledger = new LedgerMonthlyVO();
-		ledger.setDate(rs.getString("DATE"));
-		ledger.setContent(rs.getString("CONTENT"));
-		ledger.setAmount(rs.getInt("AMOUNT"));
-		ledger.setId(rs.getInt("ID"));
-		ledger.setCategory_id(rs.getInt("CATEGORY_ID"));
+		LedgerMonthlyVO ledger = new LedgerMonthlyVO();		
 		ledger.setMonth(rs.getString("MONTH"));
 		ledger.setTotal_amount(rs.getInt("TOTAL_AMOUNT"));
 

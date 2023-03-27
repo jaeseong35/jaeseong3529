@@ -12,9 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import com.lec.jdbc.common.SearchVO;
 import com.lec.jdbc.mapper.CategoryRowMapper;
+import com.lec.jdbc.mapper.LedgerCategoryRowMapper;
 import com.lec.jdbc.mapper.LedgerMonthlyRowMapper;
 import com.lec.jdbc.mapper.LedgerRowMapper;
 import com.lec.jdbc.vo.CategoryVO;
+import com.lec.jdbc.vo.LedgerCategoryVO;
 import com.lec.jdbc.vo.LedgerMonthlyVO;
 import com.lec.jdbc.vo.LedgerVO;
 
@@ -32,11 +34,13 @@ public class LedgerDAO {
 	private String sql = "";
 	private String selectLedgerCateList = "SELECT l.content, l.category_id, SUM(l.amount) as amount, l.date, c.type, c.name, c.id   FROM ledger l   LEFT JOIN category c ON l.category_id = c.id   WHERE c.type = 'expense'  GROUP BY category_id  ORDER BY amount";
 	private String selectLedgerMonthly = "SELECT DATE_FORMAT(date, '%Y-%m') AS month, SUM(amount) AS total_amount FROM ledger LEFT JOIN category c ON category_id = c.id WHERE c.type = 'expense' GROUP BY month ORDER BY month";
+	private String selectLedgerList = "SELECT * FROM ledger JOIN category ON ledger.category_id = category.id";
 	
 	@PostConstruct
 	public void getSqlPropeties() {
 		selectLedgerCateList = environment.getProperty("selectLedgerCateList");
 		selectLedgerMonthly = environment.getProperty("selectLedgerMonthly");
+		selectLedgerList = environment.getProperty("selectLedgerList");
 	}
 
 
@@ -59,8 +63,14 @@ public class LedgerDAO {
 		sql = selectLedgerMonthly;
 		List<LedgerMonthlyVO> ledgerMonthly = jdbcTemplate.query(sql, new LedgerMonthlyRowMapper());
 		
+				return ledgerMonthly;
+			}
+	public List<LedgerCategoryVO> getLedgerCategoryList() {
+		sql = selectLedgerList;
+		List<LedgerCategoryVO> ledgerCategoryList = jdbcTemplate.query(sql, new LedgerCategoryRowMapper());
+		
 		// category 정보 가져오기
-				for (LedgerMonthlyVO ledger : ledgerMonthly) {
+				for (LedgerCategoryVO ledger : ledgerCategoryList) {
 					Integer category_id = ledger.getCategory_id(); // Integer로 변경
 					if (category_id != null) {
 						CategoryVO category = jdbcTemplate.queryForObject("SELECT * FROM CATEGORY WHERE id=?",
@@ -68,6 +78,6 @@ public class LedgerDAO {
 						ledger.setCategory(category);
 					}
 				}
-				return ledgerMonthly;
+				return ledgerCategoryList;
 			}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.lec.jdbc.service.LedgerService;
+import com.lec.jdbc.vo.LedgerCategoryVO;
 import com.lec.jdbc.vo.LedgerMonthlyVO;
 import com.lec.jdbc.vo.LedgerVO;
 
@@ -33,6 +34,10 @@ public class LedgerController {
           
        List<LedgerVO> ledgerList = ledgerService.getLedgerList();
        model.addAttribute("ledgerList", ledgerList);
+       
+       List<LedgerCategoryVO> ledgerCategoryList = ledgerService.getLedgerCategoryList();
+       model.addAttribute("ledgerCategoryList", ledgerCategoryList);
+       
        
        return "ledger/getLedgerList.jsp";
    }

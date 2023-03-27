@@ -20,10 +20,14 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-b1S6+IgAgKm3Qy8YcQT0XJx2Q+Tsoe0dZjpCdrpyInwqu6J78Uhn+Yvx0W4tnJXH4x52NgpGxdEln+ZS1eAbiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
 <style>
 @font-face {
 	font-family: 'Pretendard-Regular';
@@ -200,6 +204,34 @@ header {
         }
     });
 </script>
+<div class="container mt-5">
+    <h1 class="mb-5">나의 입출금 정보</h1>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Content</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="item" items="${ledgerCategoryList}">
+          <tr>
+            <td>${item.id}</td>
+            <td>${item.category.name}</td>
+            <td>${item.category.type == 'income' ? '<i class=\"fas fa-plus text-success\"></i>' : '<i class=\"fas fa-minus text-danger\"></i>'}</td>
+            <td>${item.date}</td>
+            <td>${item.content}</td>
+            <td>${item.amount}</td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+  </div>
 
  
 </body>
