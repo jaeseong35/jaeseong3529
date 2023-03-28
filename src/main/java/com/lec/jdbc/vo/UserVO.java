@@ -4,6 +4,7 @@ package com.lec.jdbc.vo;
 
 public class UserVO {
 
+	private int id;
 	private String email;
 	private String password;
 	private String name;
@@ -51,5 +52,13 @@ public class UserVO {
 		return "UserVO [email=" + email + ", password=" + password + ", name=" + name + ", username=" + username
 				
 				+ "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}	
 }

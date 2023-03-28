@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="currentUserId" value="${sessionScope.user.id}" />
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
@@ -20,14 +21,18 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-b1S6+IgAgKm3Qy8YcQT0XJx2Q+Tsoe0dZjpCdrpyInwqu6J78Uhn+Yvx0W4tnJXH4x52NgpGxdEln+ZS1eAbiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-b1S6+IgAgKm3Qy8YcQT0XJx2Q+Tsoe0dZjpCdrpyInwqu6J78Uhn+Yvx0W4tnJXH4x52NgpGxdEln+ZS1eAbiw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <style>
 @font-face {
 	font-family: 'Pretendard-Regular';
@@ -117,16 +122,17 @@ header {
 	</header>
 
 
-<h1>나의 소비 카테고리 분석</h1>
-<div>
-    <canvas id="myChart"></canvas>
-</div>
+	<h1>나의 소비 카테고리 분석</h1>
+	<div>
+		<canvas id="myChart"></canvas>
+	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
+	<script>
+
     const dataArr = [
-        <c:forEach var="ledger" items="${ledgerList}">
+        <c:forEach var="ledger" items="${ledgerList}">     
             ${ledger.amount},
         </c:forEach>
     ];
@@ -163,14 +169,14 @@ header {
 
 </script>
 
-<h1>나의 월별 소비 분석</h1>
-<div>
-    <canvas id="myChartMon"></canvas>
-</div>
+	<h1>나의 월별 소비 분석</h1>
+	<div>
+		<canvas id="myChartMon"></canvas>
+	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
+	<script>
     const dataArr2 = [
         <c:forEach var="ledger" items="${ledgerMonthly}">
             '${ledger.month}', 
@@ -204,35 +210,42 @@ header {
         }
     });
 </script>
-<div class="container mt-5">
-    <h1 class="mb-5">나의 입출금 정보</h1>
+	<div class="container mt-5">
+		<h1 class="mb-5">${ sessionScope.user.getName() }님의입출금 정보</h1>
+		<a href="ledger/insertLedger.jsp"><button class="btn btn-primary">가계부
+				작성하기</button></a>
 
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Date</th>
-          <th>Content</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach var="item" items="${ledgerCategoryList}">
-          <tr>
-            <td>${item.id}</td>
-            <td>${item.category.name}</td>
-            <td>${item.category.type == 'income' ? '<i class=\"fas fa-plus text-success\"></i>' : '<i class=\"fas fa-minus text-danger\"></i>'}</td>
-            <td>${item.date}</td>
-            <td>${item.content}</td>
-            <td>${item.amount}</td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
-  </div>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+				<th>Id</th>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Date</th>
+					<th>Content</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="item" items="${ledgerCategoryList}">
+					<c:if test="${item.user_id == sessionScope.user.getId()}">
+						
+						<tr>
+							<td><a href="updateLedger.do?id=${item.getId()}" class="link-dark"
+							style="text-decoration: none">${item.id}</a></td>
+							<td>${item.category.name}</td>
+							<td>${item.category.type == 'income' ? '<i class=\"fas fa-plus text-success\"></i>' : '<i class=\"fas fa-minus text-danger\"></i>'}</td>
+							<td>${item.date}</td>
+							<td>${item.content}</td>
+							<td>${item.amount}</td>
+						</tr>
 
- 
+					</c:if>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+
 </body>
 </html>

@@ -4,6 +4,7 @@ package com.lec.jdbc.vo;
 
 public class LedgerVO {
 	private int id;
+	private int user_id;
     private String content;
     private int amount;
     private String date;
@@ -14,8 +15,9 @@ public class LedgerVO {
     public LedgerVO() {
     }
 
-    public LedgerVO(int id, String content, int amount, String date, int category_id) {
+    public LedgerVO(int id, int user_id, String content, int amount, String date, int category_id) {
         this.id = id;
+        this.user_id = user_id;
         this.content = content;
         this.amount = amount;
         this.date = date;
@@ -59,5 +61,13 @@ public class LedgerVO {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 }

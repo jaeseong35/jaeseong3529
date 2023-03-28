@@ -13,6 +13,7 @@ public class LedgerCategoryRowMapper implements RowMapper<LedgerCategoryVO> {
 		ledger.setContent(rs.getString("CONTENT"));
 		ledger.setAmount(rs.getInt("AMOUNT"));
 		ledger.setId(rs.getInt("ID"));
+		ledger.setUser_id(rs.getInt("USER_ID"));
 		ledger.setCategory_id(rs.getInt("CATEGORY_ID"));
 
 		return ledger;
